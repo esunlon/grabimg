@@ -20,5 +20,5 @@ def getImg(html):
         x+=1
     return imglist
 
-html = getHtml("https://www.attackmagazine.com/technique/beat-dissected/deep-melodic-progressive-techno/")
+html = getHtml(sys.argv[1])
 print (getImg(html))
