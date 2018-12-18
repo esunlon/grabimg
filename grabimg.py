@@ -1,11 +1,24 @@
 #coding = utf-8
-import urllib
+import sys
+import urllib.request
 import re
 
 def getHtml(url):
-    page = urllib.urlopen(url)
-    html = page.read()
+    page = urllib.request.urlopen(url)
+    html = page.read().decode('utf-8') #coverts bytes type to string
     return html
-html = getHtml("http://pic.yxdown.com/list/0_0_1.html")
 
-print (html)
+def getImg(html):
+    reg = r'src="(.+?\.jpg)" alt='
+    imgre = re.compile(reg)
+    imglist = imgre.findall(html)
+
+    x = 0
+    for imgurl in imglist:
+        seg = imgurl.split("/") # download name
+        urllib.request.urlretrieve(imgurl, seg[-1])
+        x+=1
+    return imglist
+
+html = getHtml("https://www.attackmagazine.com/technique/beat-dissected/deep-melodic-progressive-techno/")
+print (getImg(html))
